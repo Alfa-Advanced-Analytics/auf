@@ -1,0 +1,24 @@
+include *.py
+include auf/models/*.py
+include auf/constants/*.py
+include auf/data/*.py
+include auf/feature_rankers/*.py
+include auf/metrics/*.py
+include auf/ml_flow/*.py
+include auf/pipeline/*.py
+include auf/plots/*.py
+include auf/training/*.py
+include auf/log/*.py
+include README.md
+include LICENSE
+include setup.py
+include requirements.txt
+
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude .DS_Store
+global-exclude .ipynb_checkpoints
+global-exclude .env
+global-exclude .git
+global-exclude .gitignore
+global-exclude __pycache__
