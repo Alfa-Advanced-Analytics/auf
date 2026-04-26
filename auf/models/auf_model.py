@@ -267,21 +267,28 @@ class AufModel:
             S/T/X classifiers. For tree ensembles, returns directly.
         """
         if self._model_name == "TwoModels":
-            feats_c = list(self._model.estimator_ctrl.feature_names_)
-            imps_c = list(self._model.estimator_ctrl.feature_importances_)
-            feats_imps_c = sorted(
-                list(zip(feats_c, imps_c)), key=lambda p: p[0]
+            feats_imps_c = dict(
+                zip(
+                    list(self._model.estimator_ctrl.feature_names_),
+                    list(self._model.estimator_ctrl.feature_importances_),
+                )
             )
-
-            feats_t = list(self._model.estimator_trmnt.feature_names_)
-            imps_t = list(self._model.estimator_trmnt.feature_importances_)
-            feats_imps_t = sorted(
-                list(zip(feats_t, imps_t)), key=lambda p: p[0]
+ 
+            feats_imps_t = dict(
+                zip(
+                    list(self._model.estimator_trmnt.feature_names_),
+                    list(self._model.estimator_trmnt.feature_importances_),
+                )
             )
-
+ 
+            all_feats = list(
+                set(self._model.estimator_ctrl.feature_names_)
+                | set(self._model.estimator_trmnt.feature_names_)
+            )
+ 
             feats_imps = {
-                fc: ic + it
-                for (fc, ic), (ft, it) in zip(feats_imps_c, feats_imps_t)
+                f: feats_imps_t.get(f, 0.0) + feats_imps_c.get(f, 0.0)
+                for f in all_feats
             }
 
         else:
